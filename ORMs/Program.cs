@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using System.Globalization;
+using System.Data.Linq.SqlClient;
 
 namespace ORMs
 {
@@ -24,15 +26,19 @@ namespace ORMs
             Console.WriteLine("This project will showcase the different ways Derrick knows how to do ORM.\n");
 
             ZeroCoolDatabaseTableAdapters.XSDTableTableAdapter xsdTableAdapter = new ZeroCoolDatabaseTableAdapters.XSDTableTableAdapter();
-            int primIthink = xsdTableAdapter.Insert("Kora", "Ward", 58);
             DataTable resultSet = xsdTableAdapter.GetData();
-
-            Console.WriteLine("Primary Key Returned: "+primIthink);
-
             foreach (DataRow row in resultSet.Rows) {
                 Console.WriteLine(String.Format("Firstname: {0}\nLastname:{1}\nAge: {2}\n------------",row["Firstname"],row["Lastname"],row["Age"]));
                 Console.WriteLine("\n");
             }
+
+            ZeroCoolTableClassesDataContext x = new ZeroCoolTableClassesDataContext();
+
+            IQueryable<ORMs.XSDTable> queryresult = from people in x.XSDTables
+                                               where SqlMethods.Like(people.Firstname, "%r%")
+                                               select people;
+
+            Console.WriteLine("The number of people with a 'r' in their first name are: "+queryresult.Count());
 
             Console.ReadKey();
             Console.WriteLine("...");

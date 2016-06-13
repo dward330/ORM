@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ZeroCool" Class="ZeroCoolTableClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=127.0.0.1;Initial Catalog=ZeroCool;Persist Security Info=True;User ID=testuser" SettingsObjectName="ORMs.Properties.Settings" SettingsPropertyName="ZeroCoolConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.XSDTable" Member="XSDTables">
+    <Type Name="XSDTable">
+      <Column Name="Prim" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Firstname" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Lastname" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Age" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
