@@ -1,55 +1,16 @@
-﻿/*Author: Derrick Ward*/
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
-using System.Globalization;
-using System.Data.Linq.SqlClient;
 
-namespace ORMs
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            
 
-            Console.WriteLine("This project will showcase the different ways Derrick knows how to do Object Relational Model.\n\n");
-            Console.WriteLine("First Demo: Using a Dataset -> Table Adapters\n\n");
-            ORM_DataSet_TableAdapters_Demo(); //Runs Demo
+namespace ORMs {   
+    class Program {
+        public static void main(string[] args) {
 
-            Console.WriteLine("Press Any Key to move on to the next demo.");
-            Console.ReadKey();
-
-            Console.Clear();
-            Console.WriteLine("Second Demo: Using a DataContext\n\n");
-
-            Console.WriteLine("Press any key to end the program.");
-            Console.ReadKey();
         }
 
-        /// <summary>
-        /// Showcases the Dataset version of Object Relational Modeling, using Table Adapters
-        /// </summary>
-        public static void ORM_DataSet_TableAdapters_Demo()
-        {
-            /* High Level Generic Steps:
-             * 1) Create a Database in SQL Server
-             * 2) Right-Click Project -> Add New Item -> Add a Dataset "Item" to your Project
-             *      A) Add database tables to the dataset. Feel free to create different table adapter as well.
-             * 3) Reading Database Table: 
-             *      A) Instantiate the table adapter you want, in code. 
-             *      B)Call "your method" to get data from your table adapter and store it in a DataTable object.
-             *      C)Iterate through the rows in your DataTable object and read your data. -> Foreach loop
-             */
+        public static void ORM_DataSet_TableAdapters_Demo() {
 
-            //Reading Database Table and Printing Records
-            Console.WriteLine("Reading Database Table and Printing Records:");
-            ZeroCoolDatabaseTableAdapters.XSDTableTableAdapter xsdTableAdapter = new ZeroCoolDatabaseTableAdapters.XSDTableTableAdapter();
-            ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
+            ZeroCoolDatabaseTableAdapters.XSDTableAdapter xsdTableAdapter = new ZeroCoolDatabaseTableAdapters.XSDTableAdapter();
 
             Console.WriteLine("Now I will insert a record..\nPrinting Database Table Records now:");
             //Insert Database Table Record
@@ -74,9 +35,9 @@ namespace ORMs
         }
 
         /// <summary>
-        /// Prints Records in Database Table
+        /// Prints Records in Database Table for Dataset(TableAdapter)
         /// </summary>
-        public static void ORM_DataSet_TableAdapters_PrintTable(ZeroCoolDatabaseTableAdapters.XSDTableTableAdapter tableAdapter)
+        public static void ORM_DataSet_TableAdapters_PrintTable(ZeroCoolDatabaseTableAdapters.XSDTableAdapter tableAdapter)
         {
             DataTable resultSet = tableAdapter.GetData();
             foreach (DataRow row in resultSet.Rows)
@@ -91,28 +52,66 @@ namespace ORMs
         /// </summary>
         public static void ORM_DataContext_Demo()
         {
-            /*
-             *
+            /* High Level Generic Steps:
+             * 1) Create a Database in SQL Server
+             * 2) Right-Click Project -> Add New Item -> Add a LinqToSQL Classes "Item" to your Project
+             *      A) Add database tables to the designer, by dragging what you want from the sql server object explorer
+             * 3) Reading from a Database Table
+             *    A) Instantiate your DataContext Object
+             *    B) Use LinQ to Aggregate a SQL Result Set from the Database
+             *       I) Result set will be stored in an IQueryable collection.
+             *          -Collection would stored items of the type of your Database Table
              */
-            
+
             //Gets all the tables in the Data Context
             ZeroCoolTableClassesDataContext x = new ZeroCoolTableClassesDataContext();
 
-            //Reading all the Records from one of the Database Tables
-            IQueryable<XSDTable> queryresult = from people in x.XSDTables                                               
-                                               select people;
+            //Reading Database Table and Printing Records
+            Console.WriteLine("Reading Database Table and Printing Records:");
+            ORM_DataContext_PrintTable(x);
 
-            foreach (XSDTable record in queryresult)
+            Console.WriteLine("Now I will insert a record..\nPrinting Database Table Records now:");
+            #region Record Insert
+            XSDTable testRecord = new XSDTable();
+            testRecord.Firstname = "Joe";
+            testRecord.Lastname = "Robert";
+            testRecord.Age = 25;
+
+            x.XSDTables.InsertOnSubmit(testRecord);
+
+            try
             {
-                Console.WriteLine(String.Format("Firstname: {0}  Lastname: {1}  Age: {2}", record.Firstname??"", record.Lastname??"", record.Age==null ? "" : record.Age.ToString()));
+                x.SubmitChanges();
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("<DataContext>: Unable to Insert Record.");
+            }
+            #endregion 
 
-            //Query Database Table, using SQL Methods
-            queryresult = from people in x.XSDTables
-                          where SqlMethods.Like(people.Firstname, "%r%")
-                          select people;
+            Console.WriteLine("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
+            
+            Console.WriteLine("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
+            
+            
+        }
 
-            Console.WriteLine("The number of people with a 'r' in their first name are: " + queryresult.Count());
+        /// <summary>
+        /// Prints Records in Database Table for DataContext
+        /// </summary>
+        /// <param name="dataContext"></param>
+        public static void ORM_DataContext_PrintTable (ZeroCoolTableClassesDataContext dataContext)
+        {
+            if (dataContext != null)
+            {
+                var resultSet = from people in dataContext.XSDTables
+                                select people;
+
+                foreach (var record in resultSet)
+                {
+                    Console.WriteLine(String.Format("{0} | {1} | {2}",record.Firstname, record.Lastname, record.Age));
+                }
+            }
         }
     }
 }

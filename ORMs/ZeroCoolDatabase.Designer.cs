@@ -735,7 +735,7 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class XSDTableTableAdapter : global::System.ComponentModel.Component {
+    public partial class XSDTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -749,7 +749,7 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public XSDTableTableAdapter() {
+        public XSDTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1124,7 +1124,7 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
         
         private UpdateOrderOption _updateOrder;
         
-        private XSDTableTableAdapter _xSDTableTableAdapter;
+        private XSDTableAdapter _xSDTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -1146,12 +1146,12 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public XSDTableTableAdapter XSDTableTableAdapter {
+        public XSDTableAdapter XSDTableAdapter {
             get {
-                return this._xSDTableTableAdapter;
+                return this._xSDTableAdapter;
             }
             set {
-                this._xSDTableTableAdapter = value;
+                this._xSDTableAdapter = value;
             }
         }
         
@@ -1174,9 +1174,9 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._xSDTableTableAdapter != null) 
-                            && (this._xSDTableTableAdapter.Connection != null))) {
-                    return this._xSDTableTableAdapter.Connection;
+                if (((this._xSDTableAdapter != null) 
+                            && (this._xSDTableAdapter.Connection != null))) {
+                    return this._xSDTableAdapter.Connection;
                 }
                 return null;
             }
@@ -1191,7 +1191,7 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._xSDTableTableAdapter != null)) {
+                if ((this._xSDTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -1205,12 +1205,12 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateUpdatedRows(ZeroCoolDatabase dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._xSDTableTableAdapter != null)) {
+            if ((this._xSDTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.XSDTable.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._xSDTableTableAdapter.Update(updatedRows));
+                    result = (result + this._xSDTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -1224,11 +1224,11 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateInsertedRows(ZeroCoolDatabase dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._xSDTableTableAdapter != null)) {
+            if ((this._xSDTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.XSDTable.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._xSDTableTableAdapter.Update(addedRows));
+                    result = (result + this._xSDTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -1242,11 +1242,11 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateDeletedRows(ZeroCoolDatabase dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._xSDTableTableAdapter != null)) {
+            if ((this._xSDTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.XSDTable.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._xSDTableTableAdapter.Update(deletedRows));
+                    result = (result + this._xSDTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -1289,8 +1289,8 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
-            if (((this._xSDTableTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._xSDTableTableAdapter.Connection) == false))) {
+            if (((this._xSDTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._xSDTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -1326,13 +1326,13 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._xSDTableTableAdapter != null)) {
-                    revertConnections.Add(this._xSDTableTableAdapter, this._xSDTableTableAdapter.Connection);
-                    this._xSDTableTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._xSDTableTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._xSDTableTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._xSDTableTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._xSDTableTableAdapter.Adapter);
+                if ((this._xSDTableAdapter != null)) {
+                    revertConnections.Add(this._xSDTableAdapter, this._xSDTableAdapter.Connection);
+                    this._xSDTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._xSDTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._xSDTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._xSDTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._xSDTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -1393,9 +1393,9 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
                 if (workConnOpened) {
                     workConnection.Close();
                 }
-                if ((this._xSDTableTableAdapter != null)) {
-                    this._xSDTableTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._xSDTableTableAdapter]));
-                    this._xSDTableTableAdapter.Transaction = null;
+                if ((this._xSDTableAdapter != null)) {
+                    this._xSDTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._xSDTableAdapter]));
+                    this._xSDTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];
