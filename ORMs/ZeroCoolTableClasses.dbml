@@ -3,8 +3,8 @@
   <Table Name="dbo.XSDTable" Member="XSDTables">
     <Type Name="XSDTable">
       <Column Name="Prim" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Firstname" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Lastname" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Firstname" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Lastname" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="Age" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
     </Type>
   </Table>

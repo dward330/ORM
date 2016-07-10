@@ -1,16 +1,37 @@
 using System;
 using System.Data;
-
+using System.Linq;
 
 namespace ORMs {   
     class Program {
-        public static void main(string[] args) {
+        public static void Main(string[] args) {
+            WelcomeMessage();
 
+            Console.WriteLine("First Demo uses a DataSet (Table Adapters):");
+            Console.WriteLine("Press any key to start the demo.");
+            Console.ReadKey();
+            ORM_DataSet_TableAdapters_Demo();
+            Console.WriteLine("Press any key to go to the next demo.");
+            Console.ReadKey();
+            Console.Clear();
+
+            Console.WriteLine("Second Demo uses a DataContext:");
+            Console.WriteLine("Press any key to start the demo.");
+            Console.ReadKey();
+            ORM_DataContext_Demo();
+
+            Console.WriteLine("\nPress any key to End the program.");
+            Console.ReadKey();
         }
 
+        /// <summary>
+        /// Showcases the Dataset (Table Adapter) version of Object Relational Modeling
+        /// </summary>
         public static void ORM_DataSet_TableAdapters_Demo() {
-
             ZeroCoolDatabaseTableAdapters.XSDTableAdapter xsdTableAdapter = new ZeroCoolDatabaseTableAdapters.XSDTableAdapter();
+
+            //Read Database Table Records and Display them.
+            ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
 
             Console.WriteLine("Now I will insert a record..\nPrinting Database Table Records now:");
             //Insert Database Table Record
@@ -88,6 +109,7 @@ namespace ORMs {
                 Console.WriteLine("<DataContext>: Unable to Insert Record.");
             }
             #endregion 
+            ORM_DataContext_PrintTable(x);
 
             Console.WriteLine("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
             
@@ -112,6 +134,15 @@ namespace ORMs {
                     Console.WriteLine(String.Format("{0} | {1} | {2}",record.Firstname, record.Lastname, record.Age));
                 }
             }
+        }
+
+        /// <summary>
+        /// Prints Program Intro/Welcome Message(s)
+        /// </summary>
+        public static void WelcomeMessage()
+        {
+            Console.WriteLine("Welcome to Derrick's Object Relational Mapping Demos...Enjoy :)");
+            Console.WriteLine("----------------------------------------------------------------\n");
         }
     }
 }
