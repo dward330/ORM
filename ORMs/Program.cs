@@ -28,31 +28,39 @@ namespace ORMs {
         /// Showcases the Dataset (Table Adapter) version of Object Relational Modeling
         /// </summary>
         public static void ORM_DataSet_TableAdapters_Demo() {
-            ZeroCoolDatabaseTableAdapters.XSDTableAdapter xsdTableAdapter = new ZeroCoolDatabaseTableAdapters.XSDTableAdapter();
 
-            //Read Database Table Records and Display them.
-            ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
-
-            Console.WriteLine("Now I will insert a record..\nPrinting Database Table Records now:");
-            //Insert Database Table Record
-            xsdTableAdapter.Insert("Kayla", "Ward", 19);
-            ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
-
-            Console.WriteLine("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
-            //Update Database Table
-            DataTable resultSet = xsdTableAdapter.GetDataByPrim((long)xsdTableAdapter.GetMaxPrim());
-            DataRow row = resultSet == null ? null : resultSet.Rows[0];
-            if (row != null)
+            using (ZeroCoolDatabaseTableAdapters.XSDTableAdapter xsdTableAdapter = new ZeroCoolDatabaseTableAdapters.XSDTableAdapter())
             {
-                row["firstName"] += "Updated";
-                xsdTableAdapter.Update(row);
-            }
-            ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
+                clearAndDisplayMessage("Reading all records from the database and showing them here:");
+                //Read Database Table Records and Display them.
+                ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
+                continueOn();
 
-            Console.WriteLine("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
-            //Delete Records from Databae Table
-            xsdTableAdapter.Delete((long)row["Prim"]);
-            ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
+                clearAndDisplayMessage("Now I will insert a record..\nPrinting Database Table Records now:");
+                //Insert Database Table Record
+                xsdTableAdapter.Insert("Kayla", "Ward", 19);
+                ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
+                continueOn();
+
+                clearAndDisplayMessage("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
+                //Update Database Table
+                DataTable resultSet = xsdTableAdapter.GetDataByPrim((long)xsdTableAdapter.GetMaxPrim());
+                DataRow row = resultSet == null ? null : resultSet.Rows[0];
+                if (row != null)
+                {
+                    row["firstName"] += "Updated";
+                    xsdTableAdapter.Update(row);
+                }
+                ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
+                continueOn();
+
+                clearAndDisplayMessage("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
+                //Delete Records from Databae Table
+                xsdTableAdapter.Delete((long)row["Prim"]);
+                ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
+                continueOn();
+
+            }
         }
 
         /// <summary>
@@ -88,10 +96,11 @@ namespace ORMs {
             ZeroCoolTableClassesDataContext x = new ZeroCoolTableClassesDataContext();
 
             //Reading Database Table and Printing Records
-            Console.WriteLine("Reading Database Table and Printing Records:");
+            clearAndDisplayMessage("Reading Database Table and Printing Records:");
             ORM_DataContext_PrintTable(x);
+            continueOn();
 
-            Console.WriteLine("Now I will insert a record..\nPrinting Database Table Records now:");
+            clearAndDisplayMessage("Now I will insert a record..\nPrinting Database Table Records now:");
             #region Record Insert
             XSDTable testRecord = new XSDTable();
             testRecord.Firstname = "Joe";
@@ -110,12 +119,11 @@ namespace ORMs {
             }
             #endregion 
             ORM_DataContext_PrintTable(x);
+            continueOn();
 
-            Console.WriteLine("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
-            
-            Console.WriteLine("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
-            
-            
+            //Console.WriteLine("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
+
+            //Console.WriteLine("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
         }
 
         /// <summary>
@@ -143,6 +151,28 @@ namespace ORMs {
         {
             Console.WriteLine("Welcome to Derrick's Object Relational Mapping Demos...Enjoy :)");
             Console.WriteLine("----------------------------------------------------------------\n");
+        }
+
+        /// <summary>
+        /// Clear the Console Window and Dispay a Message, along with waiting for user to hit a key
+        /// </summary>
+        /// <param name="message"></param>
+        public static void clearAndDisplayMessage(String message)
+        {
+            Console.Clear();
+            Console.WriteLine(message+"\nPress any key to continue..");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        /// <summary>
+        /// Prompt the user before continuing
+        /// </summary>
+        public static void continueOn()
+        {
+            Console.WriteLine("\nPress any key to continue..");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 }
