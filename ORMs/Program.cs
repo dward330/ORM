@@ -7,17 +7,17 @@ namespace ORMs {
         public static void Main(string[] args) {
             WelcomeMessage();
 
-            Console.WriteLine("First Demo uses a DataSet (Table Adapters):");
-            Console.WriteLine("Press any key to start the demo.");
-            Console.ReadKey();
-            ORM_DataSet_TableAdapters_Demo();
-            Console.WriteLine("Press any key to go to the next demo.");
-            Console.ReadKey();
-            Console.Clear();
+            //Console.WriteLine("First Demo uses a DataSet (Table Adapters):");
+            //Console.WriteLine("Press any key to start the demo.");
+            //Console.ReadKey();
+            //ORM_DataSet_TableAdapters_Demo();
+            //Console.WriteLine("Press any key to go to the next demo.");
+            //Console.ReadKey();
+            //Console.Clear();
 
-            Console.WriteLine("Second Demo uses a DataContext:");
-            Console.WriteLine("Press any key to start the demo.");
-            Console.ReadKey();
+            //Console.WriteLine("Second Demo uses a DataContext:");
+            //Console.WriteLine("Press any key to start the demo.");
+            //Console.ReadKey();
             ORM_DataContext_Demo();
 
             Console.WriteLine("\nPress any key to End the program.");
@@ -134,12 +134,22 @@ namespace ORMs {
         {
             if (dataContext != null)
             {
+                int spacePadding = 15;
                 var resultSet = from people in dataContext.XSDTables
                                 select people;
 
+                if (resultSet != null)
+                {
+                    XSDTable firstRow = resultSet.ToList().FirstOrDefault();
+                    Console.WriteLine(String.Format("{0}*{1}*{2}*"
+                        , nameof(firstRow.Firstname).PadLeft(spacePadding)
+                        , nameof(firstRow.Lastname).PadLeft(spacePadding)
+                        , nameof(firstRow.Age).PadLeft(spacePadding)));
+                }
+
                 foreach (var record in resultSet)
                 {
-                    Console.WriteLine(String.Format("{0} | {1} | {2}",record.Firstname, record.Lastname, record.Age));
+                    Console.WriteLine(String.Format("{0}|{1}|{2}",record.Firstname.PadLeft(spacePadding), record.Lastname.PadLeft(spacePadding), record.Age.ToString().PadLeft(spacePadding)));
                 }
             }
         }
