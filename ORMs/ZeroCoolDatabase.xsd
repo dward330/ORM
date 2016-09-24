@@ -2,14 +2,15 @@
 <xs:schema id="ZeroCoolDatabase" targetNamespace="http://tempuri.org/ZeroCoolDatabase.xsd" xmlns:mstns="http://tempuri.org/ZeroCoolDatabase.xsd" xmlns="http://tempuri.org/ZeroCoolDatabase.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ZeroCoolConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ZeroCoolConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ORMs.Properties.Settings.GlobalReference.Default.ZeroCoolConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ZeroCoolConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ZeroCoolConnectionString1 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ORMs.Properties.Settings.GlobalReference.Default.ZeroCoolConnectionString1" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="XSDTableAdapter" GeneratorDataComponentClassName="XSDTableAdapter" Name="XSDTable" UserDataComponentName="XSDTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="ZeroCoolConnectionString (Settings)" DbObjectName="ZeroCool.dbo.XSDTable" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="ZeroCoolConnectionString1 (Settings)" DbObjectName="ZeroCool.dbo.XSDTable" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM XSDTable
@@ -60,7 +61,7 @@ WHERE        (Prim = @PRIM)</CommandText>
               <Mapping SourceColumn="Age" DataSetColumn="Age" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="ZeroCoolConnectionString (Settings)" DbObjectName="ZeroCool.dbo.XSDTable" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByPrim" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataByPrim" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByPrim" UserSourceName="FillBy">
+              <DbSource ConnectionRef="ZeroCoolConnectionString1 (Settings)" DbObjectName="ZeroCool.dbo.XSDTable" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByPrim" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataByPrim" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByPrim" UserSourceName="FillBy">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        Prim, Firstname, Lastname, Age
@@ -72,7 +73,7 @@ WHERE        (Prim = @Prim)</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="ZeroCoolConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="GetMaxPrim" Modifier="Public" Name="GetMaxPrim" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="GetMaxPrim">
+              <DbSource ConnectionRef="ZeroCoolConnectionString1 (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="GetMaxPrim" Modifier="Public" Name="GetMaxPrim" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="GetMaxPrim">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        MAX(Prim) AS Expr1
@@ -91,7 +92,7 @@ FROM            XSDTable</CommandText>
   <xs:element name="ZeroCoolDatabase" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ZeroCoolDatabase" msprop:Generator_UserDSName="ZeroCoolDatabase">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="XSDTable" msprop:Generator_TableClassName="XSDTableDataTable" msprop:Generator_TableVarName="tableXSDTable" msprop:Generator_RowChangedName="XSDTableRowChanged" msprop:Generator_TablePropName="XSDTable" msprop:Generator_RowDeletingName="XSDTableRowDeleting" msprop:Generator_RowChangingName="XSDTableRowChanging" msprop:Generator_RowEvHandlerName="XSDTableRowChangeEventHandler" msprop:Generator_RowDeletedName="XSDTableRowDeleted" msprop:Generator_RowClassName="XSDTableRow" msprop:Generator_UserTableName="XSDTable" msprop:Generator_RowEvArgName="XSDTableRowChangeEvent">
+        <xs:element name="XSDTable" msprop:Generator_TableClassName="XSDTableDataTable" msprop:Generator_TableVarName="tableXSDTable" msprop:Generator_TablePropName="XSDTable" msprop:Generator_RowDeletingName="XSDTableRowDeleting" msprop:Generator_RowChangingName="XSDTableRowChanging" msprop:Generator_RowEvHandlerName="XSDTableRowChangeEventHandler" msprop:Generator_RowDeletedName="XSDTableRowDeleted" msprop:Generator_UserTableName="XSDTable" msprop:Generator_RowChangedName="XSDTableRowChanged" msprop:Generator_RowEvArgName="XSDTableRowChangeEvent" msprop:Generator_RowClassName="XSDTableRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Prim" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnPrim" msprop:Generator_ColumnPropNameInRow="Prim" msprop:Generator_ColumnPropNameInTable="PrimColumn" msprop:Generator_UserColumnName="Prim" type="xs:long" />

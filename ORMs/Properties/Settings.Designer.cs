@@ -33,5 +33,16 @@ namespace ORMs.Properties {
                 return ((string)(this["ZeroCoolConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=WARDBUTLER-PC\\SQLEXPRESS;Initial Catalog=ZeroCool;Integrated Security" +
+            "=True")]
+        public string ZeroCoolConnectionString1 {
+            get {
+                return ((string)(this["ZeroCoolConnectionString1"]));
+            }
+        }
     }
 }

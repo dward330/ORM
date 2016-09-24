@@ -36,7 +36,7 @@ namespace ORMs
     #endregion
 		
 		public ZeroCoolTableClassesDataContext() : 
-				base(global::ORMs.Properties.Settings.Default.ZeroCoolConnectionString, mappingSource)
+				base(global::ORMs.Properties.Settings.Default.ZeroCoolConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
