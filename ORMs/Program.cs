@@ -7,17 +7,17 @@ namespace ORMs {
         public static void Main(string[] args) {
             WelcomeMessage();
 
-            //Console.WriteLine("First Demo uses a DataSet (Table Adapters):");
-            //Console.WriteLine("Press any key to start the demo.");
-            //Console.ReadKey();
-            //ORM_DataSet_TableAdapters_Demo();
-            //Console.WriteLine("Press any key to go to the next demo.");
-            //Console.ReadKey();
-            //Console.Clear();
+            Console.WriteLine("First Demo uses a DataSet (Table Adapters):");
+            Console.WriteLine("Press any key to start the demo.");
+            Console.ReadKey();
+            ORM_DataSet_TableAdapters_Demo();
+            Console.WriteLine("Press any key to go to the next demo.");
+            Console.ReadKey();
+            Console.Clear();
 
-            //Console.WriteLine("Second Demo uses a DataContext:");
-            //Console.WriteLine("Press any key to start the demo.");
-            //Console.ReadKey();
+            Console.WriteLine("Second Demo uses a DataContext:");
+            Console.WriteLine("Press any key to start the demo.");
+            Console.ReadKey();
             ORM_DataContext_Demo();
 
             Console.WriteLine("\nPress any key to End the program.");
