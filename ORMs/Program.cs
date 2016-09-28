@@ -6,22 +6,25 @@ namespace ORMs {
     class Program {
         public static void Main(string[] args) {
             WelcomeMessage();
+            resetDatabaseTable(); //Reset Database Records
 
             Console.WriteLine("First Demo uses a DataSet (Table Adapters):");
             Console.WriteLine("Press any key to start the demo.");
-            Console.ReadKey();
+            Console.ReadKey(true);
             ORM_DataSet_TableAdapters_Demo();
             Console.WriteLine("Press any key to go to the next demo.");
-            Console.ReadKey();
+            Console.ReadKey(true);
             Console.Clear();
 
-            Console.WriteLine("Second Demo uses a DataContext:");
+            resetDatabaseTable(); //Reset Database Records
+
+            clearAndDisplayMessage("Second Demo uses a DataContext:");
             Console.WriteLine("Press any key to start the demo.");
-            Console.ReadKey();
+            Console.ReadKey(true);
             ORM_DataContext_Demo();
 
             Console.WriteLine("\nPress any key to End the program.");
-            Console.ReadKey();
+            Console.ReadKey(true);
         }
 
         /// <summary>
@@ -90,6 +93,7 @@ namespace ORMs {
              *    B) Use LinQ to Aggregate a SQL Result Set from the Database
              *       I) Result set will be stored in an IQueryable collection.
              *          -Collection would stored items of the type of your Database Table
+             *  ...To Be Continued
              */
 
             //Gets all the tables in the Data Context
@@ -99,15 +103,16 @@ namespace ORMs {
             clearAndDisplayMessage("Reading Database Table and Printing Records:");
             ORM_DataContext_PrintTable(x);
             continueOn();
-
-            clearAndDisplayMessage("Now I will insert a record..\nPrinting Database Table Records now:");
+            
             #region Record Insert
+            clearAndDisplayMessage("Now I will insert a record..\nPrinting Database Table Records now:");
             XSDTable testRecord = new XSDTable();
             testRecord.Firstname = "Joe";
             testRecord.Lastname = "Robert";
             testRecord.Age = 25;
 
             x.XSDTables.InsertOnSubmit(testRecord);
+            
 
             try
             {
@@ -121,9 +126,56 @@ namespace ORMs {
             ORM_DataContext_PrintTable(x);
             continueOn();
 
-            //Console.WriteLine("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
+            #region Record Update
+            clearAndDisplayMessage("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
+            XSDTable recordToModify = x.XSDTables.Where(y => y.Firstname == "Derrick" && y.Lastname == "Ward").FirstOrDefault();
+            recordToModify.Lastname = "Kyle-" + recordToModify.Lastname;
+            try
+            {
+                x.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("<DataContext>: Unable to Modify Record.");
+            }
+            #endregion
+            ORM_DataContext_PrintTable(x);
+            continueOn();
 
-            //Console.WriteLine("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
+            #region Record Update
+            clearAndDisplayMessage("Now I will Put the record back :)\nPrinting Database Table Records now:");
+            recordToModify = x.XSDTables.Where(y => y.Firstname == "Derrick" && y.Lastname == "Kyle-Ward").FirstOrDefault();
+            recordToModify.Lastname = recordToModify.Lastname.Substring(recordToModify.Lastname.IndexOf("Kyle-")+("Kyle-").Length);
+            try
+            {
+                x.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("<DataContext>: Unable to Modify Record back to its original.");
+            }
+            #endregion
+            ORM_DataContext_PrintTable(x);
+            continueOn();
+
+            #region Delete Record
+            clearAndDisplayMessage("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
+            recordToModify = x.XSDTables.Where(y => y.Firstname == "Joe" && y.Lastname == "Robert").FirstOrDefault();
+            x.XSDTables.DeleteOnSubmit(recordToModify);
+            try
+            {
+                x.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("<DataContext>: Unable to Delete Record.");
+            }
+            #endregion
+            ORM_DataContext_PrintTable(x);
+            continueOn();
+
+            //Dispose of Resources
+            x.Dispose();
         }
 
         /// <summary>
@@ -149,7 +201,7 @@ namespace ORMs {
 
                 foreach (var record in resultSet)
                 {
-                    Console.WriteLine(String.Format("{0}|{1}|{2}",record.Firstname.PadLeft(spacePadding), record.Lastname.PadLeft(spacePadding), record.Age.ToString().PadLeft(spacePadding)));
+                    Console.WriteLine(String.Format("{0}|{1}|{2}|",record.Firstname.PadLeft(spacePadding), record.Lastname.PadLeft(spacePadding), record.Age.ToString().PadLeft(spacePadding)));
                 }
             }
         }
@@ -170,9 +222,9 @@ namespace ORMs {
         public static void clearAndDisplayMessage(String message)
         {
             Console.Clear();
-            Console.WriteLine(message+"\nPress any key to continue..");
-            Console.ReadKey();
-            Console.Clear();
+            WelcomeMessage();
+            Console.WriteLine("\n"+message+"\nPress any key to continue..\n");
+            Console.ReadKey(true);
         }
 
         /// <summary>
@@ -181,8 +233,27 @@ namespace ORMs {
         public static void continueOn()
         {
             Console.WriteLine("\nPress any key to continue..");
-            Console.ReadKey();
+            Console.ReadKey(true);
             Console.Clear();
+        }
+
+        /// <summary>
+        /// Sets the Database Table back to the original record
+        /// </summary>
+        public static void resetDatabaseTable() {
+            ZeroCoolTableClassesDataContext x = new ZeroCoolTableClassesDataContext();
+
+            x.XSDTables.DeleteAllOnSubmit(x.XSDTables);
+            x.XSDTables.InsertOnSubmit(new XSDTable() { Firstname="Derrick", Lastname="Ward", Age=25});
+
+            try
+            {
+                x.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unable to Reset Database: "+e);
+            }
         }
     }
 }
