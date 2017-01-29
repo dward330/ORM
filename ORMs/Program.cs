@@ -5,26 +5,60 @@ using System.Linq;
 namespace ORMs {   
     class Program {
         public static void Main(string[] args) {
-            WelcomeMessage();
-            resetDatabaseTable(); //Reset Database Records
+            ResetDatabaseTable(); //Reset Database Records
 
-            Console.WriteLine("First Demo uses a DataSet. Within a Dataset, we have created table adapters.");
-            Console.WriteLine("Press any key to start the demo.");
-            Console.ReadKey(true);
-            ORM_DataSet_TableAdapters_Demo();
-            Console.WriteLine("Press any key to go to the next demo.");
+            WelcomeMessage();
+            Console.WriteLine("Are you ready to begin the demos ? \nPress any key to continue...");
             Console.ReadKey(true);
             Console.Clear();
 
-            resetDatabaseTable(); //Reset Database Records
+            #region Demo 1: ADO.NET -> Table Adapters
 
-            clearAndDisplayMessage("Second Demo uses a DataContext. This is the Linq to SQL Classes Framework.");
-            Console.WriteLine("Press any key to start the demo.");
+            Console.WriteLine("First Demo: \n{0}\n{1}\n{2}\n{3}"
+                ,"-Uses the ADO.NET Framework."
+                ,"-First: Add a DataSet to your project. This will result in a .xsd file."
+                ,"-Second: From the Designer view, of the DataSet, add a TableAdapter."
+                ,"-Using this table adapter we will perfrom CRUD(Create, Read, Update, Delete) \nOperations on a Database Table");
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey(true);
+            ORM_DataSet_TableAdapters_Demo();
+            ClearAndDisplayMessage("Ready for the Next Demo?");
+            Console.Clear();
+
+            #endregion
+
+            ResetDatabaseTable(); //Reset Database Records
+
+            #region Demo 2: DataContext -> LINQ to SQL 
+
+            Console.WriteLine("Second Demo: \n{0}\n{1}\n{2}\n{3}\n{4}"
+                , "-Uses the \"LINQ to SQL\" Framework. This Framework is actually built on top of\n the ADO.Net Framework"
+                , "-First: Add \"LINQ to SQL Classes\" to your project. This will result in a \n.dbml file."
+                , "-Second: From the Designer view, of the DataContext (.dbml file), drag in a \nDatabase Table from the Server Explorer (View->Server Explorer)."
+                , "-Classes the represents the DataContext (.dbml file) and the Database table \nwill now exist for you to use."
+                ," -We will use those classes to perform CRUD (Create, Read, Update, Delete) \nOperations");
+            Console.WriteLine("\nPress any key to start the demo.");
             Console.ReadKey(true);
             ORM_DataContext_Demo();
+            ClearAndDisplayMessage("Ready for the Next Demo?");
+            Console.Clear();
 
-            Console.WriteLine("\nPress any key to End the program.");
+            #endregion
+
+            ResetDatabaseTable(); //Reset Database Records
+
+            #region Demo 3: ADO>NET -> SQLCommand 
+
+            Console.WriteLine("Third Demo: \n{0}\n{1}"
+                , "-Uses the ADO.NET Framework"
+                , "-There are no items(files) we need to add to the project to perform \nCRUD (Create, Read, Update, Delete) \nOperations");
+            Console.WriteLine("\nPress any key to start the demo.");
             Console.ReadKey(true);
+            //ORM_DataContext_Demo();
+
+            #endregion
+
+            ClearAndDisplayMessage("Demonstration Complete. Hope you Enjoyed :)");
         }
 
         /// <summary>
@@ -34,34 +68,34 @@ namespace ORMs {
 
             using (ZeroCoolDatabaseTableAdapters.XSDTableAdapter xsdTableAdapter = new ZeroCoolDatabaseTableAdapters.XSDTableAdapter())
             {
-                clearAndDisplayMessage("Reading all records from the database and showing them here:");
+                ClearAndDisplayMessage("Reading all records from the database and showing them here:");
                 //Read Database Table Records and Display them.
                 ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
-                continueOn();
+                ContinueOn();
 
-                clearAndDisplayMessage("Now I will insert a record..\nPrinting Database Table Records now:");
+                ClearAndDisplayMessage("Now I will insert a record..\nPrinting Database Table Records now:");
                 //Insert Database Table Record
                 xsdTableAdapter.Insert("Kayla", "Ward", 19);
                 ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
-                continueOn();
+                ContinueOn();
 
-                clearAndDisplayMessage("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
+                ClearAndDisplayMessage("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
                 //Update Database Table
                 DataTable resultSet = xsdTableAdapter.GetDataByPrim((long)xsdTableAdapter.GetMaxPrim());
-                DataRow row = resultSet == null ? null : resultSet.Rows[0];
+                DataRow row = resultSet.Rows[0];
                 if (row != null)
                 {
                     row["firstName"] += "Updated";
                     xsdTableAdapter.Update(row);
                 }
                 ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
-                continueOn();
+                ContinueOn();
 
-                clearAndDisplayMessage("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
+                ClearAndDisplayMessage("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
                 //Delete Records from Databae Table
                 xsdTableAdapter.Delete((long)row["Prim"]);
                 ORM_DataSet_TableAdapters_PrintTable(xsdTableAdapter);
-                continueOn();
+                ContinueOn();
 
             }
         }
@@ -74,7 +108,7 @@ namespace ORMs {
             DataTable resultSet = tableAdapter.GetData();
             foreach (DataRow row in resultSet.Rows)
             {
-                Console.WriteLine(String.Format("Firstname: {0}\nLastname:{1}\nAge: {2}\n------------", row["Firstname"], row["Lastname"], row["Age"]));
+                Console.WriteLine("Firstname: {0}\nLastname:{1}\nAge: {2}\n------------", row["Firstname"], row["Lastname"], row["Age"]);
                 Console.WriteLine("\n");
             }
         }
@@ -100,12 +134,12 @@ namespace ORMs {
             ZeroCoolTableClassesDataContext x = new ZeroCoolTableClassesDataContext();
 
             //Reading Database Table and Printing Records
-            clearAndDisplayMessage("Reading Database Table and Printing Records:");
+            ClearAndDisplayMessage("Reading Database Table and Printing Records:");
             ORM_DataContext_PrintTable(x);
-            continueOn();
+            ContinueOn();
             
             #region Record Insert
-            clearAndDisplayMessage("Now I will insert a record..\nPrinting Database Table Records now:");
+            ClearAndDisplayMessage("Now I will insert a record..\nPrinting Database Table Records now:");
             XSDTable testRecord = new XSDTable();
             testRecord.Firstname = "Joe";
             testRecord.Lastname = "Robert";
@@ -124,10 +158,10 @@ namespace ORMs {
             }
             #endregion 
             ORM_DataContext_PrintTable(x);
-            continueOn();
+            ContinueOn();
 
             #region Record Update
-            clearAndDisplayMessage("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
+            ClearAndDisplayMessage("Now I will Update a record..Can you guess which :)\nPrinting Database Table Records now:");
             XSDTable recordToModify = x.XSDTables.Where(y => y.Firstname == "Derrick" && y.Lastname == "Ward").FirstOrDefault();
             recordToModify.Lastname = "Kyle-" + recordToModify.Lastname;
             try
@@ -140,10 +174,10 @@ namespace ORMs {
             }
             #endregion
             ORM_DataContext_PrintTable(x);
-            continueOn();
+            ContinueOn();
 
             #region Record Update
-            clearAndDisplayMessage("Now I will Put the record back :)\nPrinting Database Table Records now:");
+            ClearAndDisplayMessage("Now I will Put the record back :)\nPrinting Database Table Records now:");
             recordToModify = x.XSDTables.Where(y => y.Firstname == "Derrick" && y.Lastname == "Kyle-Ward").FirstOrDefault();
             recordToModify.Lastname = recordToModify.Lastname.Substring(recordToModify.Lastname.IndexOf("Kyle-")+("Kyle-").Length);
             try
@@ -156,10 +190,10 @@ namespace ORMs {
             }
             #endregion
             ORM_DataContext_PrintTable(x);
-            continueOn();
+            ContinueOn();
 
             #region Delete Record
-            clearAndDisplayMessage("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
+            ClearAndDisplayMessage("Now I will Delete a record..Can you guess which :)\nPrinting Database Table Records now:");
             recordToModify = x.XSDTables.Where(y => y.Firstname == "Joe" && y.Lastname == "Robert").FirstOrDefault();
             x.XSDTables.DeleteOnSubmit(recordToModify);
             try
@@ -172,7 +206,7 @@ namespace ORMs {
             }
             #endregion
             ORM_DataContext_PrintTable(x);
-            continueOn();
+            ContinueOn();
 
             //Dispose of Resources
             x.Dispose();
@@ -190,18 +224,25 @@ namespace ORMs {
                 var resultSet = from people in dataContext.XSDTables
                                 select people;
 
-                if (resultSet != null)
+                if (resultSet.Any())
                 {
-                    XSDTable firstRow = resultSet.ToList().FirstOrDefault();
-                    Console.WriteLine(String.Format("{0}*{1}*{2}*"
+                    //Create object of POCO
+                    XSDTable firstRow = new XSDTable();
+                    
+                    //Print Columns Headers, using the first record from the Database Table
+                    Console.WriteLine("{0}*{1}*{2}*"
                         , nameof(firstRow.Firstname).PadLeft(spacePadding)
                         , nameof(firstRow.Lastname).PadLeft(spacePadding)
-                        , nameof(firstRow.Age).PadLeft(spacePadding)));
-                }
+                        , nameof(firstRow.Age).PadLeft(spacePadding));
 
-                foreach (var record in resultSet)
-                {
-                    Console.WriteLine(String.Format("{0}|{1}|{2}|",record.Firstname.PadLeft(spacePadding), record.Lastname.PadLeft(spacePadding), record.Age.ToString().PadLeft(spacePadding)));
+                    //Loop Through each database record and print it
+                    foreach (var record in resultSet)
+                    {
+                        Console.WriteLine("{0}|{1}|{2}|"
+                            , record.Firstname.PadLeft(spacePadding)
+                            , record.Lastname.PadLeft(spacePadding)
+                            , record.Age.ToString().PadLeft(spacePadding));
+                    }
                 }
             }
         }
@@ -211,18 +252,20 @@ namespace ORMs {
         /// </summary>
         public static void WelcomeMessage()
         {
-            Console.WriteLine("Welcome to Derrick's Object Relational Mapping Demos...Enjoy :)");
-            Console.WriteLine("----------------------------------------------------------------\n");
+            Console.WriteLine("Welcome to Derrick's Database Object Relational Mapping Demos.\n");
+            Console.WriteLine("Frameworks that will be used:\n1.{0}\n2.{1}","ADO.Net","LINQ to SQL");
+            Console.WriteLine("\nFramework Subtopics that will be used:\n1.{0}\n2.{1}\n3.{2}\n4.{3}\n5.{4}",
+                "DataSet","TableAdapters","DataContext", "LINQ To SQL Classes", "SQLCommand");
+            Console.WriteLine("\n...Enjoy :)\n\n----------------------------------------------------------------\n");
         }
 
         /// <summary>
-        /// Clear the Console Window and Dispay a Message, along with waiting for user to hit a key
+        /// Clear the Console Window, Dispay a Message, and wait for user to hit a key
         /// </summary>
         /// <param name="message"></param>
-        public static void clearAndDisplayMessage(String message)
+        public static void ClearAndDisplayMessage(String message)
         {
             Console.Clear();
-            WelcomeMessage();
             Console.WriteLine("\n"+message+"\nPress any key to continue..\n");
             Console.ReadKey(true);
         }
@@ -230,7 +273,7 @@ namespace ORMs {
         /// <summary>
         /// Prompt the user before continuing
         /// </summary>
-        public static void continueOn()
+        public static void ContinueOn()
         {
             Console.WriteLine("\nPress any key to continue..");
             Console.ReadKey(true);
@@ -240,9 +283,8 @@ namespace ORMs {
         /// <summary>
         /// Sets the Database Table back to the original record
         /// </summary>
-        public static void resetDatabaseTable() {
+        public static void ResetDatabaseTable() {
             ZeroCoolTableClassesDataContext x = new ZeroCoolTableClassesDataContext();
-
             x.XSDTables.DeleteAllOnSubmit(x.XSDTables);
             x.XSDTables.InsertOnSubmit(new XSDTable() { Firstname="Derrick", Lastname="Ward", Age=25});
 
