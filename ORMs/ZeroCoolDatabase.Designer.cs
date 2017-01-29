@@ -880,7 +880,7 @@ namespace ORMs.ZeroCoolDatabaseTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ORMs.Properties.Settings.Default.ZeroCoolConnectionString1;
+            this._connection.ConnectionString = global::ORMs.Properties.Settings.Default.ZeroCoolConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

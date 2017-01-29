@@ -36,7 +36,7 @@ namespace ORMs
     #endregion
 		
 		public ZeroCoolTableClassesDataContext() : 
-				base(global::ORMs.Properties.Settings.Default.ZeroCoolConnectionString1, mappingSource)
+				base(global::ORMs.Properties.Settings.Default.ZeroCoolConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -127,7 +127,7 @@ namespace ORMs
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Firstname", DbType="VarChar(200)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Firstname", DbType="VarChar(100)")]
 		public string Firstname
 		{
 			get
@@ -147,7 +147,7 @@ namespace ORMs
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lastname", DbType="VarChar(200)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lastname", DbType="VarChar(100)")]
 		public string Lastname
 		{
 			get

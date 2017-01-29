@@ -8,7 +8,7 @@ namespace ORMs {
             WelcomeMessage();
             resetDatabaseTable(); //Reset Database Records
 
-            Console.WriteLine("First Demo uses a DataSet (Table Adapters):");
+            Console.WriteLine("First Demo uses a DataSet. Within a Dataset, we have created table adapters.");
             Console.WriteLine("Press any key to start the demo.");
             Console.ReadKey(true);
             ORM_DataSet_TableAdapters_Demo();
@@ -18,7 +18,7 @@ namespace ORMs {
 
             resetDatabaseTable(); //Reset Database Records
 
-            clearAndDisplayMessage("Second Demo uses a DataContext:");
+            clearAndDisplayMessage("Second Demo uses a DataContext. This is the Linq to SQL Classes Framework.");
             Console.WriteLine("Press any key to start the demo.");
             Console.ReadKey(true);
             ORM_DataContext_Demo();
