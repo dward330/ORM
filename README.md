@@ -1,5 +1,5 @@
 # ORM
-To showcase the different ways to do Object Relational Mapping in .NET
+To showcase the different ways to do Object Relational Mapping in .NET (C#)
 
   * GUI: No, just a Console Application
   * What am I Teaching/Demonstrating: CRUD (Create, Read, Update, Delete) Operations
