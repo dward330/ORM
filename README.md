@@ -6,7 +6,7 @@ To showcase the different ways to do Object Relational Mapping in .NET
     * To Teach and Demonstrate ways to do Object Relation Mapping in .Net
   * What am I Teaching/Demonstrating:
     * Frameworks that will be used:
-      * AD0.Net
+      * ADO.Net
       * LINQ to SQL
     * Framwork subtopics that will be used:
       * DataSet
