@@ -16,38 +16,38 @@ namespace ORMs {
             Console.ReadKey(true);
             Console.Clear();
 
-            //#region Demo 1: ADO.NET -> Table Adapters
+            #region Demo 1: ADO.NET -> Table Adapters
 
-            //Console.WriteLine("First Demo: \n{0}\n{1}\n{2}\n{3}"
-            //    ,"-Uses the ADO.NET Framework."
-            //    ,"-First: Add a DataSet to your project. This will result in a .xsd file."
-            //    ,"-Second: From the Designer view, of the DataSet, add a TableAdapter."
-            //    ,"-Using this table adapter we will perfrom CRUD(Create, Read, Update, Delete) \nOperations on a Database Table");
-            //Console.WriteLine("\nPress any key to continue...");
-            //Console.ReadKey(true);
-            //ORM_DataSet_TableAdapters_Demo();
-            //ClearAndDisplayMessage("Ready for the Next Demo?");
-            //Console.Clear();
+            Console.WriteLine("First Demo: \n{0}\n{1}\n{2}\n{3}"
+                , "-Uses the ADO.NET Framework."
+                , "-First: Add a DataSet to your project. This will result in a .xsd file."
+                , "-Second: From the Designer view, of the DataSet, add a TableAdapter."
+                , "-Using this table adapter we will perfrom CRUD(Create, Read, Update, Delete) \nOperations on a Database Table");
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey(true);
+            ORM_DataSet_TableAdapters_Demo();
+            ClearAndDisplayMessage("Ready for the Next Demo?");
+            Console.Clear();
 
-            //#endregion
+            #endregion
 
-            //ResetDatabaseTable(); //Reset Database Records
+            ResetDatabaseTable(); //Reset Database Records
 
-            //#region Demo 2: DataContext -> LINQ to SQL 
+            #region Demo 2: DataContext -> LINQ to SQL 
 
-            //Console.WriteLine("Second Demo: \n{0}\n{1}\n{2}\n{3}\n{4}"
-            //    , "-Uses the \"LINQ to SQL\" Framework. This Framework is actually built on top of\n the ADO.Net Framework"
-            //    , "-First: Add \"LINQ to SQL Classes\" to your project. This will result in a \n.dbml file."
-            //    , "-Second: From the Designer view, of the DataContext (.dbml file), drag in a \nDatabase Table from the Server Explorer (View->Server Explorer)."
-            //    , "-Classes the represents the DataContext (.dbml file) and the Database table \nwill now exist for you to use."
-            //    ," -We will use those classes to perform CRUD (Create, Read, Update, Delete) \nOperations");
-            //Console.WriteLine("\nPress any key to start the demo.");
-            //Console.ReadKey(true);
-            //ORM_DataContext_Demo();
-            //ClearAndDisplayMessage("Ready for the Next Demo?");
-            //Console.Clear();
+            Console.WriteLine("Second Demo: \n{0}\n{1}\n{2}\n{3}\n{4}"
+                , "-Uses the \"LINQ to SQL\" Framework. This Framework is actually built on top of\n the ADO.Net Framework"
+                , "-First: Add \"LINQ to SQL Classes\" to your project. This will result in a \n.dbml file."
+                , "-Second: From the Designer view, of the DataContext (.dbml file), drag in a \nDatabase Table from the Server Explorer (View->Server Explorer)."
+                , "-Classes the represents the DataContext (.dbml file) and the Database table \nwill now exist for you to use."
+                , " -We will use those classes to perform CRUD (Create, Read, Update, Delete) \nOperations");
+            Console.WriteLine("\nPress any key to start the demo.");
+            Console.ReadKey(true);
+            ORM_DataContext_Demo();
+            ClearAndDisplayMessage("Ready for the Next Demo?");
+            Console.Clear();
 
-            //#endregion
+            #endregion
 
             ResetDatabaseTable(); //Reset Database Records
 
