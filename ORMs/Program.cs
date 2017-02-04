@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Configuration;
 
 namespace ORMs {   
     class Program {
@@ -47,14 +50,14 @@ namespace ORMs {
 
             ResetDatabaseTable(); //Reset Database Records
 
-            #region Demo 3: ADO>NET -> SQLCommand 
+            #region Demo 3: ADO>NET -> SQLClient 
 
             Console.WriteLine("Third Demo: \n{0}\n{1}"
                 , "-Uses the ADO.NET Framework"
-                , "-There are no items(files) we need to add to the project to perform \nCRUD (Create, Read, Update, Delete) \nOperations");
+                , "-There are no items(files) we need to add to the project to perform \nCRUD (Create, Read, Update, Delete) Operations");
             Console.WriteLine("\nPress any key to start the demo.");
             Console.ReadKey(true);
-            //ORM_DataContext_Demo();
+            ORM_SQLClient_Demo();
 
             #endregion
 
@@ -62,7 +65,7 @@ namespace ORMs {
         }
 
         /// <summary>
-        /// Showcases the Dataset (Table Adapter) version of Object Relational Modeling
+        /// Showcases the Dataset (Table Adapter) version of Object Relational Mapping
         /// </summary>
         public static void ORM_DataSet_TableAdapters_Demo() {
 
@@ -114,7 +117,7 @@ namespace ORMs {
         }
 
         /// <summary>
-        /// Showcases the Datacontext version of Object Relational Modeling
+        /// Showcases the Datacontext version of Object Relational Mapping
         /// </summary>
         public static void ORM_DataContext_Demo()
         {
@@ -213,7 +216,7 @@ namespace ORMs {
         }
 
         /// <summary>
-        /// Prints Records in Database Table for DataContext
+        /// Prints Records in Database Table: For DataContext Demo
         /// </summary>
         /// <param name="dataContext"></param>
         public static void ORM_DataContext_PrintTable (ZeroCoolTableClassesDataContext dataContext)
@@ -248,6 +251,125 @@ namespace ORMs {
         }
 
         /// <summary>
+        /// Showcases using SQLClient classes to do Object Relational Mapping
+        /// </summary>
+        public static void ORM_SQLClient_Demo()
+        {
+            /* High Level Generic Steps:
+             * 1) Create a Database in SQL Server
+             * 2) Reading from a Database Table
+             *    A) Instantiate your SQLConnection Object, with the connection string
+             *    B) Instatiate your SQLCommand Object, with the query and SQlConnection
+             * 3) Inserting Records
+             * 4) Updating Records
+             * 5) Deleting Records
+             *  ...To Be Continued
+             */
+
+            try
+            {
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ZeroCoolDB_SQLAuth"].ConnectionString);
+                conn.Open();
+
+                #region Read/Print Database Table 
+
+                //Reading Database Table and Printing Records
+                ClearAndDisplayMessage("Reading Database Table and Printing Records:");
+                ORM_SQLClient_PrintTable(new SqlConnection(conn.ConnectionString));
+                ContinueOn();
+
+                #endregion
+                
+                #region To Dispose
+
+                conn.Dispose();
+
+                #endregion
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error Occured: \n"+e);
+            }
+            
+        }
+
+        /// <summary>
+        /// Prints Records in Database Table: For SQL Client Demo
+        /// </summary>
+        /// <param name="conn">SqlConnetion Type, has the connection settings</param>
+        public static void ORM_SQLClient_PrintTable(SqlConnection conn)
+        {
+            //Will Hold Database Query Result Set
+            List<XSDTable> tableRecords = new List<XSDTable>();
+
+            //String Padding
+            const int spacePadding = 15;
+
+            #region Open Database Connect, Prepare SQL
+
+            //Open a new Database Connection
+            conn.Open();
+
+            //Configure SQL Command  to be used
+            const string sqlQuery = "Select Firstname, Lastname, Age From XSDTable";
+            SqlCommand command = new SqlCommand()
+            {
+                CommandText = sqlQuery,
+                Connection = conn
+            };
+
+            #endregion
+            
+            #region  Execute Query, Read Result Set, Print Results
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            //Read and Store collection of records returned
+            while(reader.Read())
+            {
+                string firstName = reader.GetString(0);
+                string lastName = reader.GetString(1);
+                long age = reader.GetInt64(2);
+
+                XSDTable record = new XSDTable()
+                {
+                    Firstname = firstName,
+                    Lastname = lastName,
+                    Age = age
+                };
+
+                tableRecords.Add(record);
+            }
+
+            //Print Datbase Records to the Screen
+            if (tableRecords.Count > 0)
+            {
+                //Print Columns Headers, using the first record from the Database Table
+                Console.WriteLine("{0}*{1}*{2}*"
+                    , @"Firstname".PadLeft(spacePadding)
+                    , @"Lastname".PadLeft(spacePadding)
+                    , @"Age".PadLeft(spacePadding));
+
+                foreach (var tableRecord in tableRecords)
+                {
+                    Console.WriteLine("{0} {1} {2}",tableRecord.Firstname.PadLeft(spacePadding)
+                        ,tableRecord.Lastname.PadLeft(spacePadding)
+                        ,tableRecord.Age.ToString().PadLeft(spacePadding));
+                }
+            }
+
+            #endregion
+
+            #region To Dispose
+
+            conn.Close();
+            command.Dispose();
+            reader.Dispose();
+
+            #endregion
+        } 
+
+        /// <summary>
         /// Prints Program Intro/Welcome Message(s)
         /// </summary>
         public static void WelcomeMessage()
@@ -263,7 +385,7 @@ namespace ORMs {
         /// Clear the Console Window, Dispay a Message, and wait for user to hit a key
         /// </summary>
         /// <param name="message"></param>
-        public static void ClearAndDisplayMessage(String message)
+        public static void ClearAndDisplayMessage(string message)
         {
             Console.Clear();
             Console.WriteLine("\n"+message+"\nPress any key to continue..\n");
