@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace ORMs {   
     class Program {
@@ -15,38 +16,38 @@ namespace ORMs {
             Console.ReadKey(true);
             Console.Clear();
 
-            #region Demo 1: ADO.NET -> Table Adapters
+            //#region Demo 1: ADO.NET -> Table Adapters
 
-            Console.WriteLine("First Demo: \n{0}\n{1}\n{2}\n{3}"
-                ,"-Uses the ADO.NET Framework."
-                ,"-First: Add a DataSet to your project. This will result in a .xsd file."
-                ,"-Second: From the Designer view, of the DataSet, add a TableAdapter."
-                ,"-Using this table adapter we will perfrom CRUD(Create, Read, Update, Delete) \nOperations on a Database Table");
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey(true);
-            ORM_DataSet_TableAdapters_Demo();
-            ClearAndDisplayMessage("Ready for the Next Demo?");
-            Console.Clear();
+            //Console.WriteLine("First Demo: \n{0}\n{1}\n{2}\n{3}"
+            //    ,"-Uses the ADO.NET Framework."
+            //    ,"-First: Add a DataSet to your project. This will result in a .xsd file."
+            //    ,"-Second: From the Designer view, of the DataSet, add a TableAdapter."
+            //    ,"-Using this table adapter we will perfrom CRUD(Create, Read, Update, Delete) \nOperations on a Database Table");
+            //Console.WriteLine("\nPress any key to continue...");
+            //Console.ReadKey(true);
+            //ORM_DataSet_TableAdapters_Demo();
+            //ClearAndDisplayMessage("Ready for the Next Demo?");
+            //Console.Clear();
 
-            #endregion
+            //#endregion
 
-            ResetDatabaseTable(); //Reset Database Records
+            //ResetDatabaseTable(); //Reset Database Records
 
-            #region Demo 2: DataContext -> LINQ to SQL 
+            //#region Demo 2: DataContext -> LINQ to SQL 
 
-            Console.WriteLine("Second Demo: \n{0}\n{1}\n{2}\n{3}\n{4}"
-                , "-Uses the \"LINQ to SQL\" Framework. This Framework is actually built on top of\n the ADO.Net Framework"
-                , "-First: Add \"LINQ to SQL Classes\" to your project. This will result in a \n.dbml file."
-                , "-Second: From the Designer view, of the DataContext (.dbml file), drag in a \nDatabase Table from the Server Explorer (View->Server Explorer)."
-                , "-Classes the represents the DataContext (.dbml file) and the Database table \nwill now exist for you to use."
-                ," -We will use those classes to perform CRUD (Create, Read, Update, Delete) \nOperations");
-            Console.WriteLine("\nPress any key to start the demo.");
-            Console.ReadKey(true);
-            ORM_DataContext_Demo();
-            ClearAndDisplayMessage("Ready for the Next Demo?");
-            Console.Clear();
+            //Console.WriteLine("Second Demo: \n{0}\n{1}\n{2}\n{3}\n{4}"
+            //    , "-Uses the \"LINQ to SQL\" Framework. This Framework is actually built on top of\n the ADO.Net Framework"
+            //    , "-First: Add \"LINQ to SQL Classes\" to your project. This will result in a \n.dbml file."
+            //    , "-Second: From the Designer view, of the DataContext (.dbml file), drag in a \nDatabase Table from the Server Explorer (View->Server Explorer)."
+            //    , "-Classes the represents the DataContext (.dbml file) and the Database table \nwill now exist for you to use."
+            //    ," -We will use those classes to perform CRUD (Create, Read, Update, Delete) \nOperations");
+            //Console.WriteLine("\nPress any key to start the demo.");
+            //Console.ReadKey(true);
+            //ORM_DataContext_Demo();
+            //ClearAndDisplayMessage("Ready for the Next Demo?");
+            //Console.Clear();
 
-            #endregion
+            //#endregion
 
             ResetDatabaseTable(); //Reset Database Records
 
@@ -62,6 +63,8 @@ namespace ORMs {
             #endregion
 
             ClearAndDisplayMessage("Demonstration Complete. Hope you Enjoyed :)");
+
+            ResetDatabaseTable(); //Reset Database Records
         }
 
         /// <summary>
@@ -157,7 +160,7 @@ namespace ORMs {
             }
             catch (Exception e)
             {
-                Console.WriteLine("<DataContext>: Unable to Insert Record.");
+                Console.WriteLine("<DataContext>: Unable to Insert Record. \n"+e);
             }
             #endregion 
             ORM_DataContext_PrintTable(x);
@@ -173,7 +176,7 @@ namespace ORMs {
             }
             catch (Exception e)
             {
-                Console.WriteLine("<DataContext>: Unable to Modify Record.");
+                Console.WriteLine("<DataContext>: Unable to Modify Record. \n"+e);
             }
             #endregion
             ORM_DataContext_PrintTable(x);
@@ -189,7 +192,7 @@ namespace ORMs {
             }
             catch (Exception e)
             {
-                Console.WriteLine("<DataContext>: Unable to Modify Record back to its original.");
+                Console.WriteLine("<DataContext>: Unable to Modify Record back to its original. \n"+e);
             }
             #endregion
             ORM_DataContext_PrintTable(x);
@@ -205,7 +208,7 @@ namespace ORMs {
             }
             catch (Exception e)
             {
-                Console.WriteLine("<DataContext>: Unable to Delete Record.");
+                Console.WriteLine("<DataContext>: Unable to Delete Record.\n"+e);
             }
             #endregion
             ORM_DataContext_PrintTable(x);
@@ -255,17 +258,27 @@ namespace ORMs {
         /// </summary>
         public static void ORM_SQLClient_Demo()
         {
-            /* High Level Generic Steps:
+            /* High Level Steps:
              * 1) Create a Database in SQL Server
              * 2) Reading from a Database Table
              *    A) Instantiate your SQLConnection Object, with the connection string
              *    B) Instatiate your SQLCommand Object, with the query and SQlConnection
              * 3) Inserting Records
+             *    A) Instantiate your SQLConnection Object, with the connection string
+             *    B) Instatiate your SQLCommand Object, with the query and SQlConnection
+             *    C) Add to the Parameters Collection in your SQL Command Object
              * 4) Updating Records
+             *    A) Instantiate your SQLConnection Object, with the connection string
+             *    B) Instatiate your SQLCommand Object, with the query and SQlConnection
+             *    C) Add to the Parameters Collection in your SQL Command Object
              * 5) Deleting Records
-             *  ...To Be Continued
+             *    A) Instantiate your SQLConnection Object, with the connection string
+             *    B) Instatiate your SQLCommand Object, with the query and SQlConnection
+             *    C) Add to the Parameters Collection in your SQL Command Object
              */
 
+            const string databaseName = "ZeroCool", databaseTable ="XSDTable";
+            
             try
             {
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ZeroCoolDB_SQLAuth"].ConnectionString);
@@ -280,11 +293,91 @@ namespace ORMs {
 
                 #endregion
                 
+                #region Insert Record into Database Table and Print Table Records
+
+                ClearAndDisplayMessage("Inserting a Record into a Database and Printing Records now...");
+
+                string sqlquery = string.Format("INSERT INTO {0} ({1},{2},{3}) VALUES ({4},{5},{6})"
+                    ,(databaseName+".dbo."+databaseTable)
+                    ,@"Firstname",@"Lastname", @"Age"
+                    ,@"@Firstname",@"@Lastname",@"@Age");
+
+                SqlCommand command = new SqlCommand()
+                {
+                    Connection = conn,
+                    CommandText = sqlquery
+                };
+                command.Parameters.Add(new SqlParameter("Firstname", @"Shantel"));
+                command.Parameters.Add(new SqlParameter("Lastname", @"Butler"));
+                command.Parameters.Add(new SqlParameter("Age", 25));
+
+                Debug.WriteLine("Insert Query: "+ sqlquery);
+
+                command.ExecuteNonQuery(); //Runs/Executes query
+
+                ORM_SQLClient_PrintTable(new SqlConnection(conn.ConnectionString));
+                ContinueOn();
+
+                #endregion
+
+                #region Update Record in Database Table and Print Table Records
+
+                ClearAndDisplayMessage("Updating a Record in the Database. Can you guess which one? \nPrinting Records now...");
+
+                string sqlquery2 = string.Format("UPDATE {0} SET {1}=@Firstname, {2}=@Lastname, {3}=@Age WHERE {1}=@OrigFirstname"
+                    , (databaseName + ".dbo." + databaseTable)
+                    , @"Firstname", @"Lastname", @"Age");
+
+                SqlCommand command2 = new SqlCommand()
+                {
+                    Connection = conn,
+                    CommandText = sqlquery2
+                };
+                command2.Parameters.Add(new SqlParameter("Firstname", @"ShantelUpdated"));
+                command2.Parameters.Add(new SqlParameter("Lastname", @"Butler"));
+                command2.Parameters.Add(new SqlParameter("Age", 25));
+                command2.Parameters.Add(new SqlParameter("OrigFirstname", @"Shantel"));
+
+                Debug.WriteLine("Update Query: " + sqlquery2);
+
+                command2.ExecuteNonQuery(); //Runs/Executes query
+
+                ORM_SQLClient_PrintTable(new SqlConnection(conn.ConnectionString));
+                ContinueOn();
+
+                #endregion
+
+                #region Delete Record in Database Table and Print Table Records
+
+                ClearAndDisplayMessage("Deleting a Record in the Database. Can you guess which one? \nPrinting Records now...");
+
+                string sqlquery3 = string.Format("DELETE FROM {0} WHERsE {1}=@OrigFirstname"
+                    , (databaseName + ".dbo." + databaseTable)
+                    , @"Firstname");
+
+                SqlCommand command3 = new SqlCommand()
+                {
+                    Connection = conn,
+                    CommandText = sqlquery3
+                };
+                command3.Parameters.Add(new SqlParameter("OrigFirstname", @"ShantelUpdated"));
+
+                Debug.WriteLine("Delete Query: " + sqlquery3);
+
+                command3.ExecuteNonQuery(); //Runs/Executes query
+
+                ORM_SQLClient_PrintTable(new SqlConnection(conn.ConnectionString));
+                ContinueOn();
+
+                #endregion
+
                 #region To Dispose
 
                 conn.Dispose();
+                command.Dispose();
 
                 #endregion
+
             }
             catch (Exception e)
             {
@@ -408,7 +501,7 @@ namespace ORMs {
         public static void ResetDatabaseTable() {
             ZeroCoolTableClassesDataContext x = new ZeroCoolTableClassesDataContext();
             x.XSDTables.DeleteAllOnSubmit(x.XSDTables);
-            x.XSDTables.InsertOnSubmit(new XSDTable() { Firstname="Derrick", Lastname="Ward", Age=25});
+            x.XSDTables.InsertOnSubmit(new XSDTable() { Firstname = "Derrick", Lastname = "Ward", Age = 25 });
 
             try
             {
@@ -416,7 +509,7 @@ namespace ORMs {
             }
             catch (Exception e)
             {
-                Console.WriteLine("Unable to Reset Database: "+e);
+                Console.WriteLine("Unable to Reset Database: " + e);
             }
         }
     }
